@@ -1,7 +1,11 @@
-import { defineAbilityFor } from '@repo/auth'
+import { defineAbilityFor, projectSchema } from '@repo/auth'
 
-const ability = defineAbilityFor({ role: 'MEMBER' })
+const ability = defineAbilityFor({
+  role: 'MEMBER',
+  id: 'user-id',
+})
 
-const userCanInvite = ability.can('update', 'User')
-const userCanDelete = ability.can('delete', 'User')
-console.log(userCanInvite, userCanDelete)
+const project = projectSchema.parse({ id: 'project-id', ownerId: 'user-id' })
+
+console.log(ability.can('create', 'Project'))
+console.log(ability.can('delete', project))

@@ -4,7 +4,7 @@ import {
   createMongoAbility,
   type MongoAbility,
 } from '@casl/ability'
-import z from 'zod'
+import { z } from 'zod'
 import type { User } from './models/user'
 import { permissions } from './permissions'
 import { billingSubject } from './subjects/billing'
@@ -13,11 +13,16 @@ import { organizationSubject } from './subjects/organization'
 import { projectSubject } from './subjects/project'
 import { userSubject } from './subjects/user'
 
+export * from './models/organization'
+export * from './models/project'
+export * from './models/user'
+export * from './roles'
+
 const appAbilitiesSchema = z.union([
-  userSubject,
   projectSubject,
-  inviteSubject,
+  userSubject,
   organizationSubject,
+  inviteSubject,
   billingSubject,
   z.tuple([z.literal('manage'), z.literal('all')]),
 ])
@@ -36,7 +41,11 @@ export function defineAbilityFor(user: User) {
 
   permissions[user.role](user, builder)
 
-  const ability = builder.build()
+  const ability = builder.build({
+    detectSubjectType(subject) {
+      return subject.__typename
+    },
+  })
 
   return ability
 }

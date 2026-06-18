@@ -2,10 +2,14 @@
   "name": "@repo/api",
   "version": "1.0.0",
   "scripts": {
-    "dev": "tsx watch src/index.ts"
+    "dev": "tsx watch src/http/server.ts"
   },
   "dependencies": {
-    "@repo/auth": "workspace:*"
+    "@fastify/cors": "^11.2.0",
+    "@repo/auth": "workspace:*",
+    "fastify": "^5.8.5",
+    "fastify-type-provider-zod": "^6.1.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",

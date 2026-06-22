@@ -1,0 +1,10 @@
+services:
+  pg:
+    image: bitnami/postgresql:latest
+    container_name: pg_saas_rbac
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRESQL_USER: docker
+      POSTGRESQL_PASSWORD: docker
+      POSTGRESQL_DB: saas_rbac
